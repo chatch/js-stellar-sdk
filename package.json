@@ -10,9 +10,7 @@
     "version": "gulp build",
     "postversion": "git push && git push --tags"
   },
-  "keywords": [
-    "stellar"
-  ],
+  "keywords": ["stellar"],
   "repository": {
     "type": "git",
     "url": "https://github.com/stellar/js-stellar-sdk.git"
@@ -83,7 +81,7 @@
     "eventsource": "^0.2.1",
     "jsdoc": "^3.4.1",
     "lodash": "^4.0.1",
-    "stellar-base": "^0.7.4",
+    "stellar-base": "chatch/js-stellar-base#master",
     "toml": "^2.3.0"
   }
 }
