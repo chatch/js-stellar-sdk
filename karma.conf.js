@@ -1,6 +1,6 @@
 module.exports = function(config) {
   config.set({
-    frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     browsers : ["Firefox"],
 
     files: [
@@ -15,8 +15,12 @@ module.exports = function(config) {
 
     webpack: {
       module: {
-        loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {loader: 'babel-loader', options: {presets: ['env']}}
+          }
         ]
       }
     },

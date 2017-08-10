@@ -113,11 +113,11 @@ describe("server.js tests", function () {
           // Response data
           expect(response.account_id).to.be.equal("GBAH7FQMC3CZJ4WD6GE7G7YXCIU36LC2IHXQ7D5MQAUO4PODOWIVLSFS");
           expect(response.subentry_count).to.be.equal(5);
-          expect(response.transactions).to.be.function;
-          expect(response.operations).to.be.function;
-          expect(response.payments).to.be.function;
-          expect(response.effects).to.be.function;
-          expect(response.offers).to.be.function;
+          expect(response.transactions).to.be.an.instanceof(Function);
+          expect(response.operations).to.be.an.instanceof(Function);
+          expect(response.payments).to.be.an.instanceof(Function);
+          expect(response.effects).to.be.an.instanceof(Function);
+          expect(response.offers).to.be.an.instanceof(Function);
           // AccountResponse methods
           expect(response.sequenceNumber()).to.be.equal("5387216134078475");
           expect(response.sequence).to.be.equal("5387216134078475");
@@ -189,8 +189,8 @@ describe("server.js tests", function () {
             .call()
             .then(response => {
               expect(response.records).to.be.deep.equal(ledgersResponse._embedded.records);
-              expect(response.next).to.be.function;
-              expect(response.prev).to.be.function;
+              expect(response.next).to.be.an.instanceof(Function);
+              expect(response.prev).to.be.an.instanceof(Function);
               done();
             })
             .catch(function (err) {
@@ -214,8 +214,8 @@ describe("server.js tests", function () {
             .call()
             .then(response => {
               expect(response.records).to.be.deep.equal(ledgersResponse._embedded.records);
-              expect(response.next).to.be.function;
-              expect(response.prev).to.be.function;
+              expect(response.next).to.be.an.instanceof(Function);
+              expect(response.prev).to.be.an.instanceof(Function);
               done();
             })
         });
@@ -234,8 +234,8 @@ describe("server.js tests", function () {
             .then(function(page) {
               page.next().then(function(response) {
                 expect(response.records).to.be.deep.equal(ledgersResponse._embedded.records);
-                expect(response.next).to.be.function;
-                expect(response.prev).to.be.function;
+                expect(response.next).to.be.an.instanceof(Function);
+                expect(response.prev).to.be.an.instanceof(Function);
                 done();
               });
             });
@@ -411,10 +411,10 @@ describe("server.js tests", function () {
             .call()
             .then(function (response) {
               expect(response.records).to.be.deep.equal(transactionsResponse._embedded.records);
-              expect(response.records[0].ledger).to.be.function;
+              expect(response.records[0].ledger).to.be.an.instanceof(Function);
               expect(response.records[0].ledger_attr).to.be.equal(7952722);
-              expect(response.next).to.be.function;
-              expect(response.prev).to.be.function;
+              expect(response.next).to.be.an.instanceof(Function);
+              expect(response.prev).to.be.an.instanceof(Function);
 
               response.records[0].operations().then(function(response) {
                 expect(response.operations).to.not.be.undefined;
@@ -447,8 +447,8 @@ describe("server.js tests", function () {
             .call()
             .then(function (response) {
               expect(response.records).to.be.deep.equal(transactionsResponse._embedded.records);
-              expect(response.next).to.be.function;
-              expect(response.prev).to.be.function;
+              expect(response.next).to.be.an.instanceof(Function);
+              expect(response.prev).to.be.an.instanceof(Function);
               response.records[0].operations({limit: 1}).then(function(response) {
                 expect(response.operations).to.not.be.undefined;
                 done();
@@ -607,8 +607,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(offersResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -759,8 +759,8 @@ describe("server.js tests", function () {
         .call()
         .then(function (response) {
           expect(response.records).to.be.deep.equal(pathsResponse._embedded.records);
-          expect(response.next).to.be.function;
-          expect(response.prev).to.be.function;
+          expect(response.next).to.be.an.instanceof(Function);
+          expect(response.prev).to.be.an.instanceof(Function);
           done();
         })
       .catch(function (err) {
@@ -816,8 +816,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(effectsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -835,8 +835,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(effectsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -854,8 +854,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(effectsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -925,8 +925,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(operationsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -944,8 +944,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(operationsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -963,8 +963,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(operationsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -982,8 +982,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(operationsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -1048,8 +1048,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(paymentsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -1067,8 +1067,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(paymentsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {
@@ -1086,8 +1086,8 @@ describe("server.js tests", function () {
           .call()
           .then(function (response) {
             expect(response.records).to.be.deep.equal(paymentsResponse._embedded.records);
-            expect(response.next).to.be.function;
-            expect(response.prev).to.be.function;
+            expect(response.next).to.be.an.instanceof(Function);
+            expect(response.prev).to.be.an.instanceof(Function);
             done();
           })
           .catch(function (err) {

@@ -5,10 +5,12 @@ var isparta     = require('isparta');
 var plugins     = require('gulp-load-plugins')();
 var runSequence = require('run-sequence');
 var server      = require('gulp-develop-server' );
-var webpack     = require("webpack");
-var exec        = require('child_process').exec;
+var babel       = require('gulp-babel');
+var uglify      = require('gulp-uglify');
+var webpack     = require('webpack');
+var webpackStream = require('webpack-stream');
 var fs          = require("fs");
- 
+
 gulp.task('default', ['build']);
 
 gulp.task('lint:src', function() {
@@ -47,18 +49,22 @@ gulp.task('hooks:precommit', ['build'], function() {
 
 gulp.task('build:node', ['lint:src'], function() {
     return gulp.src('src/**/*.js')
-        .pipe(plugins.babel())
+        .pipe(babel())
         .pipe(gulp.dest('lib'));
 });
 
 gulp.task('build:browser', ['lint:src'], function() {
   return gulp.src('src/browser.js')
-    .pipe(plugins.webpack({
+    .pipe(webpackStream({
       output: { library: 'StellarSdk' },
       module: {
-        loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
-        ],
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {loader: 'babel-loader', options: {presets: ['env']}}
+          }
+        ]
       },
       plugins: [
         // Ignore native modules (ed25519)
@@ -69,7 +75,7 @@ gulp.task('build:browser', ['lint:src'], function() {
     .pipe(plugins.insert.prepend(fs.readFileSync('./node_modules/event-source-polyfill/eventsource.js')))
     .pipe(plugins.rename('stellar-sdk.js'))
     .pipe(gulp.dest('dist'))
-    .pipe(plugins.uglify({
+    .pipe(uglify({
       output: {
         ascii_only: true
       }
@@ -80,6 +86,7 @@ gulp.task('build:browser', ['lint:src'], function() {
 
 gulp.task('test:init-istanbul', ['clean-coverage'], function () {
   return gulp.src(['src/**/*.js'])
+    .pipe(babel())
     .pipe(plugins.istanbul({
       instrumenter: isparta.Instrumenter
     }))
@@ -88,7 +95,9 @@ gulp.task('test:init-istanbul', ['clean-coverage'], function () {
 
 gulp.task('test:integration', ['build:node', 'test:init-istanbul'], function() {
   return gulp.src(["test/test-helper.js", "test/unit/**/*.js", "test/integration/**/*.js"])
+    .pipe(babel())
     .pipe(plugins.mocha({
+      compilers: ['js:babel-register'],
       reporter: ['spec']
     }))
     .pipe(plugins.istanbul.writeReports());
@@ -96,7 +105,9 @@ gulp.task('test:integration', ['build:node', 'test:init-istanbul'], function() {
 
 gulp.task('test:unit', ['build:node'], function() {
   return gulp.src(["test/test-helper.js", "test/unit/**/*.js"])
+    .pipe(babel())
     .pipe(plugins.mocha({
+      compilers: ['js:babel-register'],
       reporter: ['spec']
     }));
 });

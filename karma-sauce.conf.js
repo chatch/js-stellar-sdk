@@ -34,7 +34,7 @@ module.exports = function(config) {
     browserNoActivityTimeout : 4*60*1000,
     captureTimeout : 4*60*1000,
 
-    frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers),
 
@@ -50,8 +50,12 @@ module.exports = function(config) {
 
     webpack: {
       module: {
-        loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {loader: 'babel-loader', options: {presets: ['env']}}
+          }
         ]
       }
     },
