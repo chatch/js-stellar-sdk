@@ -27,10 +27,10 @@ export class CallBuilder {
   checkFilter() {
     if (this.filter.length >= 2) {
       throw new BadRequestError("Too many filters specified", this.filter);
-    } 
+    }
     if (this.filter.length === 1) {
       this.url.segment(this.filter[0]);
-    }        
+    }
   }
 
   /**
@@ -127,7 +127,7 @@ export class CallBuilder {
 
       return this._sendNormalRequest(uri).then(r => this._parseRecord(r));
     };
-  } 
+  }
 
   /**
    * Convert each link into a function on the response object.
@@ -146,7 +146,7 @@ export class CallBuilder {
     });
     return json;
   }
-  
+
   _sendNormalRequest(url) {
     if (url.authority() === '') {
       url = url.authority(this.url.authority());
@@ -156,8 +156,13 @@ export class CallBuilder {
       url = url.protocol(this.url.protocol());
     }
 
+    // chatch: REMOVED the following fix to enable caching of horizon requests
+    //          in stellar-explorer - see the service worker configuration in
+    //          webpack.config.prod.js in stellar-explorer project:
+    //
     // Temp fix for: https://github.com/stellar/js-stellar-sdk/issues/15
-    url.addQuery('c', Math.random());
+    //  url.addQuery('c', Math.random());
+
     var promise = axios.get(url.toString())
       .then(response => response.data)
       .catch(this._handleNetworkError);
