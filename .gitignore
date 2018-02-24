@@ -3,3 +3,5 @@
 /dist/
 /coverage/
 /jsdoc/
+.DS_Store
+.idea/
